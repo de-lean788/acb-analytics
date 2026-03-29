@@ -19,7 +19,8 @@ bilbao_analytics/
 ├── docker-compose.yml
 ├── Dockerfile
 ├── Makefile
-└── requirements.txt
+├── requirements.txt
+└── migrate_to_supabase.py
 ```
 
 ## Setup local (sin Docker)
