@@ -1,0 +1,33 @@
+# Entorno virtual
+venv/
+.venv/
+env/
+
+# Base de datos local (nunca subir al repo)
+data/db/
+*.db
+*.sqlite
+*.sqlite3
+
+# CSVs de datos (privados del club)
+data/csv/
+
+# Variables de entorno
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Sistema
+.DS_Store
+*.log
