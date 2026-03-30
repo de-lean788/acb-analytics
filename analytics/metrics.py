@@ -62,7 +62,9 @@ def _boxscore_raw(engine: Engine) -> pd.DataFrame:
     FROM events e
     JOIN matches m ON e.match_id = m.id
     WHERE e.player_id IS NOT NULL
-    GROUP BY m.id, e.player_id
+    GROUP BY m.id, m.date, m.home_team, m.away_team, m.bilbao_role,
+             m.score_home_final, m.score_away_final,
+             e.player_id, e.player_name, e.is_bilbao
     ORDER BY m.date, e.is_bilbao DESC, pts DESC
     """
     df = _read(engine, q)
