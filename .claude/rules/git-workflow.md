@@ -81,3 +81,87 @@ data: añadir partidos J8 a J12 y migrar a Supabase
 - Un commit = un cambio lógico. No acumular 10 ficheros en un commit "varios fixes".
 - Si un test falla en develop: crear rama `fix/` inmediatamente, no parchear en develop.
 - Si tienes dudas de si algo está listo para develop: no lo está. Más tests primero.
+
+## 🤖 Reglas para Claude Code (OBLIGATORIO)
+
+Estas reglas aplican cuando Claude genera o modifica código.
+
+### Gestión de ramas
+
+- NUNCA trabajar directamente en `develop` ni en `master`
+- SIEMPRE crear una nueva rama desde `develop`
+- El nombre debe seguir el formato definido (`fix/`, `feature/`, etc.)
+- Si la tarea implica varios cambios → dividir en varias ramas
+
+### Commits
+
+- Claude debe hacer commits pequeños y atómicos
+- Cada commit debe seguir el formato definido
+- NO agrupar cambios no relacionados en un mismo commit
+
+### Validación obligatoria
+
+Antes de cualquier merge:
+
+- Ejecutar tests:
+  ```bash
+  pytest tests/ -v
+  ```
+Si algún test falla:
+- DETENER el proceso
+- NO mergear
+- Corregir en la misma rama
+
+#### Merges
+- Claude NO debe hacer merge directo a master
+- Claude NO debe hacer push directo a develop sin validación previa
+- El flujo correcto es:
+  - crear rama
+  - implementar
+  - testear
+  - merge a develop
+
+#### Pull Requests (si aplica)
+- Crear PR claro y descriptivo
+- Incluir:
+  - qué cambia
+  - por qué
+  - impacto en datos o métricas
+
+#### Seguridad
+- NO sobrescribir datos existentes sin validación
+- NO eliminar código sin justificación clara
+- NO hacer refactors grandes sin tests
+
+#### Regla de parada
+
+Claude debe PARAR y pedir confirmación si:
+
+- los tests fallan
+- hay ambigüedad en la tarea
+- el cambio afecta múltiples módulos críticos
+
+---
+
+# 🧠 POR QUÉ ESTO ES CLAVE
+
+Sin esto, Claude tiende a:
+
+❌ modificar `develop` directamente  
+❌ hacer commits gigantes  
+❌ no ejecutar tests  
+❌ romper flujo sin darse cuenta  
+
+Con esto:
+
+✅ debes comportarte como un dev senior  
+✅ respetar el pipeline  
+✅ reduce errores reales  
+
+
+### Integración con datos
+
+- Cualquier cambio en datos debe:
+  - ser reproducible
+  - documentarse
+  - versionarse si aplica
