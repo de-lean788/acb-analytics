@@ -58,7 +58,7 @@ def _reconstruct_match_lineups(match_id: int, bilbao_role: str,
     """
     # Filtrar solo eventos de Bilbao relevantes, ordenados
     df = events_df[
-        events_df["is_bilbao"] == 1
+        events_df["is_bilbao"].astype(bool) == True
     ].sort_values("order").reset_index(drop=True)
 
     if df.empty:
@@ -233,7 +233,7 @@ def lineup_stats(engine: Engine, min_stints: int = 2) -> pd.DataFrame:
                     (l.score_bilbao_end - l.score_bilbao_start)
                         - (l.score_rival_end  - l.score_rival_start) AS net_pts_stint
                 FROM lineups l
-                WHERE l.is_bilbao = 1
+                WHERE l.is_bilbao = TRUE
             """),
             conn,
         )
@@ -279,7 +279,7 @@ def on_off_splits(engine: Engine) -> pd.DataFrame:
                     (l.score_bilbao_end - l.score_bilbao_start)
                         - (l.score_rival_end  - l.score_rival_start) AS net_pts
                 FROM lineups l
-                WHERE l.is_bilbao = 1
+                WHERE l.is_bilbao = TRUE
             """),
             conn,
         )
@@ -288,7 +288,7 @@ def on_off_splits(engine: Engine) -> pd.DataFrame:
             text("""
                 SELECT DISTINCT e.player_id, e.player_name
                 FROM events e
-                WHERE e.is_bilbao = 1 AND e.player_id IS NOT NULL
+                WHERE e.is_bilbao = TRUE AND e.player_id IS NOT NULL
             """),
             conn,
         )

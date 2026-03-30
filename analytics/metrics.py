@@ -97,7 +97,7 @@ def boxscore_bilbao(engine: Engine, match_id: int | None = None) -> pd.DataFrame
                      fg3m, fg3a, ftm, fta, ast, orb, drb, stl, tov, blk, pf
     """
     df = _boxscore_raw(engine)
-    df = df[df["is_bilbao"] == 1].copy()
+    df = df[df["is_bilbao"].astype(bool)].copy()
     if match_id:
         df = df[df["match_id"] == match_id]
     return df.reset_index(drop=True)
@@ -130,7 +130,7 @@ def team_stats(engine: Engine) -> pd.DataFrame:
         })
 
     bilbao = (
-        raw[raw["is_bilbao"] == 1]
+        raw[raw["is_bilbao"].astype(bool)]
         .groupby(["match_id", "date", "rival_name", "result",
                   "score_bilbao", "score_rival"])
         .apply(_agg, include_groups=False)
@@ -139,7 +139,7 @@ def team_stats(engine: Engine) -> pd.DataFrame:
     bilbao["team"] = "Bilbao"
 
     rival = (
-        raw[raw["is_bilbao"] == 0]
+        raw[~raw["is_bilbao"].astype(bool)]
         .groupby(["match_id"])
         .apply(_agg, include_groups=False)
         .reset_index()
@@ -189,7 +189,7 @@ def four_factors(engine: Engine) -> pd.DataFrame:
     # Necesito los rebotes defensivos del rival para ORB%
     raw = _boxscore_raw(engine)
     rival_drb = (
-        raw[raw["is_bilbao"] == 0]
+        raw[~raw["is_bilbao"].astype(bool)]
         .groupby("match_id")["drb"]
         .sum()
         .reset_index()
@@ -230,7 +230,7 @@ def shooting_profile(engine: Engine, min_games: int = 2) -> pd.DataFrame:
     3PAr  = FG3A / FGA   (tasa de triples sobre intentos)
     """
     raw = _boxscore_raw(engine)
-    bilbao = raw[raw["is_bilbao"] == 1].copy()
+    bilbao = raw[raw["is_bilbao"].astype(bool)].copy()
 
     agg = (
         bilbao.groupby("player_name")
@@ -282,7 +282,7 @@ def net_ratings(engine: Engine) -> pd.DataFrame:
     # Puntos del rival por partido
     raw = _boxscore_raw(engine)
     rival_pts = (
-        raw[raw["is_bilbao"] == 0]
+        raw[~raw["is_bilbao"].astype(bool)]
         .groupby("match_id")["pts"]
         .sum()
         .reset_index()
