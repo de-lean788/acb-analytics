@@ -23,14 +23,14 @@ class Base(DeclarativeBase):
 class Match(Base):
     __tablename__ = "matches"
 
-    id = Column(Integer, primary_key=True)           # match_id original del scraper
-    date = Column(String, nullable=False)            # YYYYMMDD extraído del nombre de fichero
+    id = Column(Integer, primary_key=True)
+    date = Column(String, nullable=False)
     home_team = Column(String, nullable=False)
     away_team = Column(String, nullable=False)
-    bilbao_role = Column(String, nullable=False)     # 'home' | 'away'
+    bilbao_role = Column(String, nullable=False)
     score_home_final = Column(Integer)
     score_away_final = Column(Integer)
-    source_file = Column(String, nullable=False)     # nombre del CSV original
+    source_file = Column(String, nullable=False)
 
     events = relationship("Event", back_populates="match", cascade="all, delete-orphan")
     lineups = relationship("Lineup", back_populates="match", cascade="all, delete-orphan")
@@ -42,7 +42,7 @@ class Match(Base):
 class Player(Base):
     __tablename__ = "players"
 
-    id = Column(Float, primary_key=True)             # player_id original (Float por como viene del CSV)
+    id = Column(Float, primary_key=True)
     name = Column(String, nullable=False)
     number = Column(Float)
 
@@ -60,33 +60,27 @@ class Event(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     match_id = Column(Integer, ForeignKey("matches.id"), nullable=False)
 
-    # Tiempo
     quarter = Column(Integer, nullable=False)
     minute = Column(Integer, nullable=False)
     second = Column(Integer, nullable=False)
     time_str = Column(String)
-    order = Column(Integer, nullable=False)          # secuencia dentro del partido
+    order = Column(Integer, nullable=False)
 
-    # Contexto
     is_local = Column(Boolean, nullable=False)
-    team_role = Column(String, nullable=False)       # 'home' | 'away'
-    is_bilbao = Column(Boolean, nullable=False)      # calculado en ingesta
+    team_role = Column(String, nullable=False)
+    is_bilbao = Column(Boolean, nullable=False)
 
-    # Marcador en el momento del evento
     score_home = Column(Integer)
     score_away = Column(Integer)
 
-    # Tipo de evento
     play_type = Column(Integer)
     play_type_desc = Column(String)
     play_tag = Column(Float)
 
-    # Jugador
-    player_id = Column(Float, ForeignKey("players.id"), nullable=True)
+    player_id = Column(Float, nullable=True)
     player_name = Column(String)
     player_number = Column(Float)
 
-    # Stats del evento
     pts = Column(Float)
     ft_made = Column(Float)
     ft_att = Column(Float)
@@ -117,34 +111,25 @@ class Event(Base):
 
 
 class Lineup(Base):
-    """
-    Representa un stint: intervalo de tiempo en que un quinteto concreto
-    estuvo en pista de forma continua.
-
-    Se construye en Fase 3 a partir de los eventos de sustitución.
-    """
     __tablename__ = "lineups"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     match_id = Column(Integer, ForeignKey("matches.id"), nullable=False)
-    team_role = Column(String, nullable=False)       # 'home' | 'away'
+    team_role = Column(String, nullable=False)
     is_bilbao = Column(Boolean, nullable=False)
 
-    # Jugadores del quinteto (ordenados alfabéticamente para deduplicar)
     p1_id = Column(Float)
     p2_id = Column(Float)
     p3_id = Column(Float)
     p4_id = Column(Float)
     p5_id = Column(Float)
-    lineup_key = Column(String, nullable=False)      # "id1-id2-id3-id4-id5" (sorted)
+    lineup_key = Column(String, nullable=False)
 
-    # Intervalo del stint
     start_quarter = Column(Integer, nullable=False)
     start_order = Column(Integer, nullable=False)
     end_quarter = Column(Integer)
     end_order = Column(Integer)
 
-    # Marcador al inicio y fin del stint
     score_bilbao_start = Column(Integer)
     score_rival_start = Column(Integer)
     score_bilbao_end = Column(Integer)
@@ -161,13 +146,9 @@ class Lineup(Base):
         return f"<Lineup {self.lineup_key} Q{self.start_quarter} order={self.start_order}>"
 
 
-
-
-
 def get_engine(database_url: str | None = None):
     url = database_url or os.getenv("DATABASE_URL", "sqlite:///./data/db/bilbao.db")
 
-    # Supabase/Heroku usan "postgres://" que SQLAlchemy 2.x no acepta
     if url.startswith("postgres://"):
         url = url.replace("postgres://", "postgresql+psycopg2://", 1)
 
