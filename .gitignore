@@ -9,8 +9,9 @@ data/db/
 *.sqlite
 *.sqlite3
 
-# CSVs de datos (privados del club)
+# Datos del club (privados — CSVs y JSONs de datos locales)
 data/csv/
+data/*.json
 
 # Variables de entorno
 .env
@@ -27,6 +28,12 @@ build/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Claude Code — configuración local de permisos (no compartir)
+.claude/settings.local.json
+
+# Análisis y notas temporales
+temp/
 
 # Sistema
 .DS_Store
