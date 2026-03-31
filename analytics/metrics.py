@@ -35,6 +35,7 @@ def _boxscore_raw(engine: Engine) -> pd.DataFrame:
     SELECT
         m.id            AS match_id,
         m.date,
+        m.round_number,
         m.home_team,
         m.away_team,
         m.bilbao_role,
@@ -62,7 +63,7 @@ def _boxscore_raw(engine: Engine) -> pd.DataFrame:
     FROM events e
     JOIN matches m ON e.match_id = m.id
     WHERE e.player_id IS NOT NULL
-    GROUP BY m.id, m.date, m.home_team, m.away_team, m.bilbao_role,
+    GROUP BY m.id, m.date, m.round_number, m.home_team, m.away_team, m.bilbao_role,
              m.score_home_final, m.score_away_final,
              e.player_id, e.player_name, (e.team_role = m.bilbao_role)
     ORDER BY m.date, (e.team_role = m.bilbao_role) DESC, pts DESC
@@ -131,8 +132,8 @@ def team_stats(engine: Engine) -> pd.DataFrame:
 
     bilbao = (
         raw[raw["is_bilbao"].astype(bool)]
-        .groupby(["match_id", "date", "rival_name", "result",
-                  "score_bilbao", "score_rival"])
+        .groupby(["match_id", "date", "round_number", "rival_name", "result",
+                  "score_bilbao", "score_rival"], dropna=False)
         .apply(_agg, include_groups=False)
         .reset_index()
     )
@@ -213,7 +214,7 @@ def four_factors(engine: Engine) -> pd.DataFrame:
         + 0.15 * df["ft_rate"]
     ).round(4)
 
-    cols = ["date", "rival_name", "result", "score_bilbao", "score_rival",
+    cols = ["date", "round_number", "rival_name", "result", "score_bilbao", "score_rival",
             "efg_pct", "tov_pct", "orb_pct", "ft_rate", "ff_score",
             "pts", "poss"]
     return df[cols].sort_values("date").reset_index(drop=True)
@@ -296,7 +297,7 @@ def net_ratings(engine: Engine) -> pd.DataFrame:
     df["drtg"] = ((df["score_rival"]  / df["poss_rival"]) * 100).round(1)
     df["nrtg"] = (df["ortg"] - df["drtg"]).round(1)
 
-    cols = ["date", "rival_name", "result", "score_bilbao", "score_rival",
+    cols = ["date", "round_number", "rival_name", "result", "score_bilbao", "score_rival",
             "poss", "ortg", "drtg", "nrtg"]
     return df[cols].sort_values("date").reset_index(drop=True)
 

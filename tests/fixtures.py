@@ -109,6 +109,7 @@ def make_engine_with_data():
             bilbao_role="home",
             score_home_final=85, score_away_final=75,
             source_file="20251019_1_SurneBilbaoBasket_vs_Rival1_plays.csv",
+            round_number=1,
         ))
 
         bilbao_stats_1 = [
@@ -148,6 +149,7 @@ def make_engine_with_data():
             bilbao_role="away",
             score_home_final=80, score_away_final=70,
             source_file="20251026_2_Rival2_vs_SurneBilbaoBasket_plays.csv",
+            round_number=2,
         ))
 
         bilbao_stats_2 = [

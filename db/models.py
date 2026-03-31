@@ -31,6 +31,7 @@ class Match(Base):
     score_home_final = Column(Integer)
     score_away_final = Column(Integer)
     source_file = Column(String, nullable=False)
+    round_number = Column(Integer, nullable=True)
 
     events = relationship("Event", back_populates="match", cascade="all, delete-orphan")
     lineups = relationship("Lineup", back_populates="match", cascade="all, delete-orphan")
