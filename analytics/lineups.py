@@ -19,6 +19,7 @@ from sqlalchemy import text
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session
 
+from analytics.validators import is_bilbao_home
 from db.models import Lineup
 
 
@@ -56,9 +57,11 @@ def _reconstruct_match_lineups(match_id: int, bilbao_role: str,
       start_quarter, score_bilbao_start, score_rival_start,
       score_bilbao_end, score_rival_end
     """
-    # Filtrar solo eventos de Bilbao relevantes, ordenados
+    # Filtrar solo eventos de Bilbao relevantes, ordenados.
+    # Usar team_role == bilbao_role (derivado de is_bilbao_home()) en lugar
+    # de la columna is_bilbao almacenada, para evitar errores con datos legados.
     df = events_df[
-        events_df["is_bilbao"].astype(bool) == True
+        events_df["team_role"] == bilbao_role
     ].sort_values("order").reset_index(drop=True)
 
     if df.empty:
@@ -182,7 +185,7 @@ def rebuild_lineups(engine: Engine) -> int:
     """
     with engine.connect() as conn:
         matches = conn.execute(
-            text("SELECT id, bilbao_role FROM matches ORDER BY date")
+            text("SELECT id, source_file FROM matches ORDER BY date")
         ).fetchall()
 
     total = 0
@@ -191,7 +194,9 @@ def rebuild_lineups(engine: Engine) -> int:
         session.query(Lineup).delete()
         session.commit()
 
-        for match_id, bilbao_role in matches:
+        for match_id, source_file in matches:
+            # Derivar bilbao_role del nombre de fichero — fuente de verdad
+            bilbao_role = "home" if is_bilbao_home(source_file) else "away"
             events_df = pd.read_sql(
                 text("""
                     SELECT * FROM events
