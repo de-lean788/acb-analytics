@@ -56,11 +56,12 @@ DROP TABLE IF EXISTS matches CASCADE;
 CREATE TABLE matches (
     id          INTEGER PRIMARY KEY,
     date        VARCHAR,
-    home_team   VARCHAR,
-    away_team   VARCHAR,
-    bilbao_role VARCHAR,
+    home_team        VARCHAR,
+    away_team        VARCHAR,
+    bilbao_role      VARCHAR,
     score_home_final INTEGER,
     score_away_final INTEGER,
+    round_number     INTEGER,
     source_file VARCHAR
 );
 

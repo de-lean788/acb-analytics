@@ -11,6 +11,7 @@ Uso:
 """
 
 import argparse
+import json
 import os
 import re
 import sys
@@ -26,6 +27,26 @@ from db.models import Base, Event, Match, Player, get_engine, create_tables
 # ── Constantes ────────────────────────────────────────────────────────────────
 
 BILBAO_KEYWORD = os.getenv("BILBAO_TEAM_KEYWORD", "SurneBilbao")
+
+# ── Calendario: match_id → número de jornada ─────────────────────────────────
+
+def _load_round_map() -> dict[int, int]:
+    """Carga acb_calendar_2526.json y devuelve {match_id: round_number}."""
+    cal_path = Path(__file__).parent.parent / "data" / "acb_calendar_2526.json"
+    if not cal_path.exists():
+        return {}
+    try:
+        with open(cal_path) as f:
+            data = json.load(f)
+        return {
+            e["match_id"]: e["jornada"]
+            for e in data.get("jornadas", [])
+            if e.get("match_id") and e.get("jornada")
+        }
+    except Exception:
+        return {}
+
+_ROUND_MAP: dict[int, int] = _load_round_map()
 
 # play_type_desc que indican sustitución
 SUB_IN = "Entra a pista"
@@ -172,6 +193,7 @@ def load_match(path: Path, session: Session, dry_run: bool = False) -> tuple[boo
         score_home_final=int(last_scored["score_home"]),
         score_away_final=int(last_scored["score_away"]),
         source_file=path.name,
+        round_number=_ROUND_MAP.get(meta["match_id"]),
     )
     session.add(match)
 

@@ -196,13 +196,14 @@
     },
     {
       "jornada": 19,
-      "match_id": 104708,
-      "date": "20260207",
-      "home_team": "CasademontZaragoza",
+      "match_id": 104623,
+      "date": "20260218",
+      "home_team": "DreamlandGranCanaria",
       "away_team": "SurneBilbaoBasket",
-      "result_home": 82,
-      "result_away": 84,
-      "in_db": true
+      "result_home": 97,
+      "result_away": 98,
+      "in_db": true,
+      "note": "Partido adelantado al miércoles. J19 confirmado en acb.com."
     },
     {
       "jornada": 20,
@@ -212,27 +213,29 @@
       "away_team": "KosnerBaskonia",
       "result_home": 69,
       "result_away": 76,
-      "in_db": true
+      "in_db": true,
+      "note": "J20 — jugado antes que J19 Gran Canaria (J19 aplazado). VERIFICAR en acb.com."
+    },
+    {
+      "jornada": null,
+      "match_id": 104708,
+      "date": "20260207",
+      "home_team": "CasademontZaragoza",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 82,
+      "result_away": 84,
+      "in_db": true,
+      "note": "JORNADA PENDIENTE DE VERIFICAR en acb.com. match_id no secuencial (104708 >> 104658) sugiere partido aplazado jugado anticipadamente el 07/02. Candidatos: J21 aplazado u otra jornada posterior."
     },
     {
       "jornada": 21,
-      "match_id": 104623,
-      "date": "20260218",
-      "home_team": "DreamlandGranCanaria",
-      "away_team": "SurneBilbaoBasket",
-      "result_home": 97,
-      "result_away": 98,
-      "in_db": true,
-      "note": "Partido adelantado al miércoles. Jornada 21 inferida por orden cronológico — VERIFICAR en acb.com."
-    },
-    {
-      "jornada": 22,
       "match_id": 104641,
       "date": "20260307",
       "home_team": "RecoletasSaludSanPabloBurgos",
       "away_team": "SurneBilbaoBasket",
       "result_home": 96,
       "result_away": 88,
+      "note": "J21 confirmado en acb.com.",
       "in_db": true,
       "note": "Partido adelantado. Jornada 22 inferida — VERIFICAR. Puede ser J21 aplazado."
     },
@@ -245,7 +248,7 @@
       "result_home": 100,
       "result_away": 90,
       "in_db": true,
-      "note": "J22 confirmado en acb.com. CONFLICTO: 104641 también aparece como J22. En Liga Endesa es posible que ambos sean la misma jornada jugada en fechas distintas (aplazado)."
+      "note": "J22 — VERIFICAR en acb.com (anterior conflicto resuelto: Burgos es J21, Breogan debería ser J22)."
     },
     {
       "jornada": 23,

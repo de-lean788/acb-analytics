@@ -86,21 +86,24 @@ h1, h2, h3 { font-family: 'Syne', sans-serif; letter-spacing: -0.03em; }
 
 from db.models import get_engine
 
+import os
+
 # En Streamlit Cloud, las variables vienen de st.secrets
 # En local, vienen del .env — este bloque hace el puente
 try:
     import streamlit as _st
     if hasattr(_st, "secrets") and "DATABASE_URL" in _st.secrets:
-        import os
         os.environ.setdefault("DATABASE_URL", _st.secrets["DATABASE_URL"])
         os.environ.setdefault("BILBAO_TEAM_KEYWORD",
                               _st.secrets.get("BILBAO_TEAM_KEYWORD", "SurneBilbao"))
 except Exception:
     pass
-from analytics.metrics import four_factors, net_ratings, shooting_profile, season_summary
-from analytics.lineups import rebuild_lineups, on_off_splits, player_impact, lineup_stats
 
-import os
+from analytics.metrics import four_factors, net_ratings, shooting_profile, season_summary
+from analytics.lineups import on_off_splits, player_impact, lineup_stats
+
+# Detección de entorno: cloud si DATABASE_URL viene de secrets
+IS_CLOUD = bool(os.getenv("DATABASE_URL", "").startswith("postgresql"))
 
 # ── Engine ────────────────────────────────────────────────────────────────────
 @st.cache_resource
@@ -134,11 +137,13 @@ with st.sidebar:
 
     st.markdown("---")
 
-    if st.button("↺  Actualizar datos", use_container_width=True):
-        load_all_data.clear()
-        engine = get_db_engine()
-        rebuild_lineups(engine)
-        st.rerun()
+    if not IS_CLOUD:
+        from analytics.lineups import rebuild_lineups
+        if st.button("↺  Actualizar datos", use_container_width=True):
+            load_all_data.clear()
+            engine = get_db_engine()
+            rebuild_lineups(engine)
+            st.rerun()
 
     st.markdown("<br>", unsafe_allow_html=True)
     st.caption("Surne Bilbao Basket · 25/26")
