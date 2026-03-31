@@ -1,32 +1,366 @@
 {
-  "season": "2025-26",
-  "team": "SurneBilbao",
-  "notes": "Calendario completo Liga Endesa 2025-26. J1 y J25 no están en la BD local (pendientes de scrapear).",
+  "_meta": {
+    "season": "2025-26",
+    "team": "Surne Bilbao Basket",
+    "team_id": 4389,
+    "generated": "2026-03-31",
+    "source": "acb.com / investigación web",
+    "notes": [
+      "J1 (match_id 104459, Unicaja vs Bilbao, 04/10/2025) NO está en la BD — pendiente de scraping",
+      "J24 (match_id 104667, UCAM vs Bilbao, 28/03/2026) ya se jugó pero NO está en la BD",
+      "J21 y J22 con partidos adelantados/aplazados: ver campo 'note' en cada entrada",
+      "J25 en adelante: partidos futuros, sin resultado"
+    ]
+  },
   "jornadas": [
-    {"match_id": 104459, "jornada": 1,  "date": "20251004", "home": "UnicajaMalaga",           "away": "SurneBilbao", "result": "86-68", "in_db": false, "notes": "J1 — pendiente scrapear"},
-    {"match_id": 104475, "jornada": 2,  "date": "20251012", "home": "RecoletasSalud",          "away": "SurneBilbao", "result": "85-95", "in_db": true,  "notes": "API devolvió roles home/away invertidos. CSV corregido manualmente."},
-    {"match_id": 104481, "jornada": 3,  "date": "20251019", "home": "JoventutBadalona",        "away": "SurneBilbao", "result": null,    "in_db": true},
-    {"match_id": 104492, "jornada": 4,  "date": "20251026", "home": "SurneBilbao",             "away": "MoraBancAndorra", "result": null, "in_db": true},
-    {"match_id": 104495, "jornada": 5,  "date": "20251101", "home": "BAXIManresa",             "away": "SurneBilbao", "result": null,    "in_db": true},
-    {"match_id": 104511, "jornada": 6,  "date": "20251109", "home": "SurneBilbao",             "away": "CasademontZaragoza", "result": null, "in_db": true},
-    {"match_id": 104519, "jornada": 7,  "date": "20251116", "home": "RealMadrid",              "away": "SurneBilbao", "result": null,    "in_db": true},
-    {"match_id": 104527, "jornada": 8,  "date": "20251123", "home": "KosnerBaskonia",          "away": "SurneBilbao", "result": null,    "in_db": true},
-    {"match_id": 104538, "jornada": 9,  "date": "20251207", "home": "SurneBilbao",             "away": "DreamlandGranCanaria", "result": null, "in_db": true},
-    {"match_id": 104544, "jornada": 10, "date": "20251214", "home": "SurneBilbao",             "away": "HioposLleida", "result": null,   "in_db": true},
-    {"match_id": 104553, "jornada": 11, "date": "20251221", "home": "RioBreogan",              "away": "SurneBilbao", "result": null,    "in_db": true},
-    {"match_id": 104564, "jornada": 12, "date": "20251228", "home": "SurneBilbao",             "away": "Bara",        "result": null,    "in_db": true},
-    {"match_id": 104572, "jornada": 13, "date": "20260102", "home": "SurneBilbao",             "away": "ValenciaBasket", "result": null, "in_db": true},
-    {"match_id": 104583, "jornada": 14, "date": "20260104", "home": "BsquetGirona",            "away": "SurneBilbao", "result": null,    "in_db": true},
-    {"match_id": 104586, "jornada": 15, "date": "20260110", "home": "SurneBilbao",             "away": "UCAMMurcia",  "result": null,    "in_db": true},
-    {"match_id": 104597, "jornada": 16, "date": "20260117", "home": "SurneBilbao",             "away": "LaLagunaTenerife", "result": null, "in_db": true},
-    {"match_id": 104606, "jornada": 17, "date": "20260124", "home": "CoviranGranada",          "away": "SurneBilbao", "result": null,    "in_db": true},
-    {"match_id": 104614, "jornada": 18, "date": "20260131", "home": "SurneBilbao",             "away": "JoventutBadalona", "result": null, "in_db": true},
-    {"match_id": 104708, "jornada": 19, "date": "20260207", "home": "CasademontZaragoza",      "away": "SurneBilbao", "result": null,    "in_db": true, "notes": "Partido aplazado — ID no secuencial (104708 en lugar de ~104620)"},
-    {"match_id": 104637, "jornada": 20, "date": "20260215", "home": "SurneBilbao",             "away": "KosnerBaskonia", "result": null, "in_db": true},
-    {"match_id": 104623, "jornada": 21, "date": "20260218", "home": "DreamlandGranCanaria",    "away": "SurneBilbao", "result": null,    "in_db": true, "notes": "Verificar jornada vs 104641 — posible conflicto J21/J22"},
-    {"match_id": 104641, "jornada": 22, "date": "20260307", "home": "RecoletasSaludSanPabloBurgos", "away": "SurneBilbao", "result": null, "in_db": true, "notes": "Verificar jornada vs 104623 — posible conflicto J21/J22"},
-    {"match_id": 104651, "jornada": 23, "date": "20260314", "home": "SurneBilbao",             "away": "RioBreogan",  "result": null,    "in_db": true},
-    {"match_id": 104658, "jornada": 24, "date": "20260321", "home": "MoraBancAndorra",         "away": "SurneBilbao", "result": null,    "in_db": true},
-    {"match_id": 104667, "jornada": 25, "date": "20260328", "home": "UCAMMurcia",              "away": "SurneBilbao", "result": "100-81", "in_db": false, "notes": "J25 — jugado el 28/03/2026, pendiente scrapear"}
+    {
+      "jornada": 1,
+      "match_id": 104459,
+      "date": "20251004",
+      "home_team": "Unicaja",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 86,
+      "result_away": 68,
+      "in_db": false,
+      "note": "FALTA en la BD. Scraping pendiente."
+    },
+    {
+      "jornada": 2,
+      "match_id": 104475,
+      "date": "20251012",
+      "home_team": "RecoletasSaludSanPabloBurgos",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 85,
+      "result_away": 95,
+      "in_db": true
+    },
+    {
+      "jornada": 3,
+      "match_id": 104481,
+      "date": "20251019",
+      "home_team": "JoventutBadalona",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 101,
+      "result_away": 69,
+      "in_db": true
+    },
+    {
+      "jornada": 4,
+      "match_id": 104492,
+      "date": "20251026",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "MoraBancAndorra",
+      "result_home": 81,
+      "result_away": 71,
+      "in_db": true
+    },
+    {
+      "jornada": 5,
+      "match_id": 104495,
+      "date": "20251101",
+      "home_team": "BAXIManresa",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 79,
+      "result_away": 77,
+      "in_db": true
+    },
+    {
+      "jornada": 6,
+      "match_id": 104511,
+      "date": "20251109",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "CasademontZaragoza",
+      "result_home": 106,
+      "result_away": 75,
+      "in_db": true
+    },
+    {
+      "jornada": 7,
+      "match_id": 104519,
+      "date": "20251116",
+      "home_team": "RealMadrid",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 82,
+      "result_away": 70,
+      "in_db": true
+    },
+    {
+      "jornada": 8,
+      "match_id": 104527,
+      "date": "20251123",
+      "home_team": "KosnerBaskonia",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 110,
+      "result_away": 91,
+      "in_db": true
+    },
+    {
+      "jornada": 9,
+      "match_id": 104538,
+      "date": "20251207",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "DreamlandGranCanaria",
+      "result_home": 79,
+      "result_away": 72,
+      "in_db": true
+    },
+    {
+      "jornada": 10,
+      "match_id": 104544,
+      "date": "20251214",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "HioposLleida",
+      "result_home": 93,
+      "result_away": 75,
+      "in_db": true
+    },
+    {
+      "jornada": 11,
+      "match_id": 104553,
+      "date": "20251221",
+      "home_team": "RioBreogan",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 100,
+      "result_away": 99,
+      "in_db": true
+    },
+    {
+      "jornada": 12,
+      "match_id": 104564,
+      "date": "20251228",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "Barca",
+      "result_home": 66,
+      "result_away": 71,
+      "in_db": true
+    },
+    {
+      "jornada": 13,
+      "match_id": 104572,
+      "date": "20260102",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "ValenciaBasket",
+      "result_home": 72,
+      "result_away": 116,
+      "in_db": true
+    },
+    {
+      "jornada": 14,
+      "match_id": 104583,
+      "date": "20260104",
+      "home_team": "BasquetGirona",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 89,
+      "result_away": 93,
+      "in_db": true
+    },
+    {
+      "jornada": 15,
+      "match_id": 104586,
+      "date": "20260110",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "UCAMMurcia",
+      "result_home": 96,
+      "result_away": 82,
+      "in_db": true
+    },
+    {
+      "jornada": 16,
+      "match_id": 104597,
+      "date": "20260117",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "LaLagunaTenerife",
+      "result_home": 95,
+      "result_away": 78,
+      "in_db": true
+    },
+    {
+      "jornada": 17,
+      "match_id": 104606,
+      "date": "20260124",
+      "home_team": "CoviranGranada",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 84,
+      "result_away": 88,
+      "in_db": true
+    },
+    {
+      "jornada": 18,
+      "match_id": 104614,
+      "date": "20260131",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "JoventutBadalona",
+      "result_home": 80,
+      "result_away": 76,
+      "in_db": true
+    },
+    {
+      "jornada": 19,
+      "match_id": 104623,
+      "date": "20260218",
+      "home_team": "DreamlandGranCanaria",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 97,
+      "result_away": 98,
+      "in_db": true,
+      "note": "Partido adelantado al miércoles. J19 confirmado en acb.com."
+    },
+    {
+      "jornada": 20,
+      "match_id": 104637,
+      "date": "20260215",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "KosnerBaskonia",
+      "result_home": 69,
+      "result_away": 76,
+      "in_db": true,
+      "note": "J20 — jugado antes que J19 Gran Canaria (J19 aplazado). VERIFICAR en acb.com."
+    },
+    {
+      "jornada": null,
+      "match_id": 104708,
+      "date": "20260207",
+      "home_team": "CasademontZaragoza",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 82,
+      "result_away": 84,
+      "in_db": true,
+      "note": "JORNADA PENDIENTE DE VERIFICAR en acb.com. match_id no secuencial (104708 >> 104658) sugiere partido aplazado jugado anticipadamente el 07/02. Candidatos: J21 aplazado u otra jornada posterior."
+    },
+    {
+      "jornada": 21,
+      "match_id": 104641,
+      "date": "20260307",
+      "home_team": "RecoletasSaludSanPabloBurgos",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 96,
+      "result_away": 88,
+      "note": "J21 confirmado en acb.com.",
+      "in_db": true,
+      "note": "Partido adelantado. Jornada 22 inferida — VERIFICAR. Puede ser J21 aplazado."
+    },
+    {
+      "jornada": 22,
+      "match_id": 104651,
+      "date": "20260314",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "RioBreogan",
+      "result_home": 100,
+      "result_away": 90,
+      "in_db": true,
+      "note": "J22 — VERIFICAR en acb.com (anterior conflicto resuelto: Burgos es J21, Breogan debería ser J22)."
+    },
+    {
+      "jornada": 23,
+      "match_id": 104658,
+      "date": "20260321",
+      "home_team": "MoraBancAndorra",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 98,
+      "result_away": 102,
+      "in_db": true
+    },
+    {
+      "jornada": 24,
+      "match_id": 104667,
+      "date": "20260328",
+      "home_team": "UCAMMurcia",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": 100,
+      "result_away": 81,
+      "in_db": false,
+      "note": "Ya se jugó (28/03/2026) pero NO está en la BD. Pendiente de scraping."
+    },
+    {
+      "jornada": 25,
+      "match_id": 104675,
+      "date": "20260404",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "Unicaja",
+      "result_home": null,
+      "result_away": null,
+      "in_db": false
+    },
+    {
+      "jornada": 26,
+      "match_id": 104690,
+      "date": "20260412",
+      "home_team": "Barca",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": null,
+      "result_away": null,
+      "in_db": false
+    },
+    {
+      "jornada": 27,
+      "match_id": 104696,
+      "date": "20260418",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "BAXIManresa",
+      "result_home": null,
+      "result_away": null,
+      "in_db": false
+    },
+    {
+      "jornada": 28,
+      "match_id": 104716,
+      "date": "20260503",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "CoviranGranada",
+      "result_home": null,
+      "result_away": null,
+      "in_db": false
+    },
+    {
+      "jornada": 29,
+      "match_id": 104724,
+      "date": "20260510",
+      "home_team": "HioposLleida",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": null,
+      "result_away": null,
+      "in_db": false
+    },
+    {
+      "jornada": 30,
+      "match_id": 104735,
+      "date": "20260514",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "RealMadrid",
+      "result_home": null,
+      "result_away": null,
+      "in_db": false
+    },
+    {
+      "jornada": 31,
+      "match_id": 104742,
+      "date": "20260517",
+      "home_team": "ValenciaBasket",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": null,
+      "result_away": null,
+      "in_db": false
+    },
+    {
+      "jornada": 32,
+      "match_id": 104751,
+      "date": "20260524",
+      "home_team": "SurneBilbaoBasket",
+      "away_team": "BasquetGirona",
+      "result_home": null,
+      "result_away": null,
+      "in_db": false
+    },
+    {
+      "jornada": 33,
+      "match_id": 104759,
+      "date": "20260529",
+      "home_team": "LaLagunaTenerife",
+      "away_team": "SurneBilbaoBasket",
+      "result_home": null,
+      "result_away": null,
+      "in_db": false,
+      "note": "Puede ser J33 o J34. Falta identificar el último partido de la temporada regular."
+    }
   ]
 }
