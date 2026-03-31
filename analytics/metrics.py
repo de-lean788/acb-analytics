@@ -42,7 +42,7 @@ def _boxscore_raw(engine: Engine) -> pd.DataFrame:
         m.score_away_final,
         e.player_id,
         e.player_name,
-        e.is_bilbao,
+        (e.team_role = m.bilbao_role) AS is_bilbao,
         MAX(e.pts)       AS pts,
         MAX(e.fg2_made)  AS fg2m,
         MAX(e.fg2_att)   AS fg2a,
@@ -64,8 +64,8 @@ def _boxscore_raw(engine: Engine) -> pd.DataFrame:
     WHERE e.player_id IS NOT NULL
     GROUP BY m.id, m.date, m.home_team, m.away_team, m.bilbao_role,
              m.score_home_final, m.score_away_final,
-             e.player_id, e.player_name, e.is_bilbao
-    ORDER BY m.date, e.is_bilbao DESC, pts DESC
+             e.player_id, e.player_name, (e.team_role = m.bilbao_role)
+    ORDER BY m.date, (e.team_role = m.bilbao_role) DESC, pts DESC
     """
     df = _read(engine, q)
 

@@ -33,51 +33,58 @@ _ZERO_STATS = {k: 0.0 for k in [
 _NULL_STATS = {k: None for k in _ZERO_STATS}
 
 
-def _make_player_events(match_id, is_bilbao, players, stats_list, score_home=80, score_away=75):
+def _make_player_events(match_id, is_home, is_bilbao, players, stats_list, score_home=80, score_away=75):
     """
     Genera eventos mínimos para boxscore (MAX stats) y reconstrucción de lineups
     (Quinteto inicial + Fin de cuarto).
+
+    Args:
+        is_home:   True si este equipo es el local en el partido.
+        is_bilbao: True si este equipo es Bilbao (independiente de local/visitante).
     """
-    team_role = "home" if is_bilbao else "away"
+    team_role = "home" if is_home else "away"
     events = []
 
-    # Quinteto inicial (order 10..14)
+    # Quinteto inicial (order 10..14 para home, 15..19 para away)
+    base_order = 10 if is_home else 15
     for i, player in enumerate(players):
         events.append(Event(
             match_id=match_id,
             quarter=1, minute=10, second=0,
-            time_str="Q1 10:00", order=10 + i,
-            is_local=is_bilbao, team_role=team_role, is_bilbao=is_bilbao,
+            time_str="Q1 10:00", order=base_order + i,
+            is_local=is_home, team_role=team_role, is_bilbao=is_bilbao,
             score_home=0, score_away=0,
             play_type=599, play_type_desc="Quinteto inicial",
             player_id=player["id"], player_name=player["name"], player_number=player["number"],
             **_ZERO_STATS,
         ))
 
-    # Stats acumulados finales (order 9000..9004)
+    # Stats acumulados finales (order 9000..9004 para home, 9010..9014 para away)
+    base_stats_order = 9000 if is_home else 9010
     for i, (player, stats) in enumerate(zip(players, stats_list)):
         events.append(Event(
             match_id=match_id,
             quarter=4, minute=0, second=5,
-            time_str="Q4 00:05", order=9000 + i,
-            is_local=is_bilbao, team_role=team_role, is_bilbao=is_bilbao,
+            time_str="Q4 00:05", order=base_stats_order + i,
+            is_local=is_home, team_role=team_role, is_bilbao=is_bilbao,
             score_home=score_home, score_away=score_away,
             play_type=1, play_type_desc="2 puntos anotado (local)",
             player_id=player["id"], player_name=player["name"], player_number=player["number"],
             **stats,
         ))
 
-    # Fin de cuarto (order 9999) — cierra el stint
-    events.append(Event(
-        match_id=match_id,
-        quarter=4, minute=0, second=0,
-        time_str="Q4 00:00", order=9999,
-        is_local=is_bilbao, team_role=team_role, is_bilbao=is_bilbao,
-        score_home=score_home, score_away=score_away,
-        play_type=122, play_type_desc="Fin de cuarto",
-        player_id=None, player_name=None, player_number=None,
-        **_NULL_STATS,
-    ))
+    # Fin de cuarto — cierra el stint (solo uno por partido, generado por el equipo local)
+    if is_home:
+        events.append(Event(
+            match_id=match_id,
+            quarter=4, minute=0, second=0,
+            time_str="Q4 00:00", order=9999,
+            is_local=is_home, team_role=team_role, is_bilbao=is_bilbao,
+            score_home=score_home, score_away=score_away,
+            play_type=122, play_type_desc="Fin de cuarto",
+            player_id=None, player_name=None, player_number=None,
+            **_NULL_STATS,
+        ))
 
     return events
 
@@ -101,7 +108,7 @@ def make_engine_with_data():
             home_team="SurneBilbao", away_team="Rival1",
             bilbao_role="home",
             score_home_final=85, score_away_final=75,
-            source_file="test1.csv",
+            source_file="20251019_1_SurneBilbaoBasket_vs_Rival1_plays.csv",
         ))
 
         bilbao_stats_1 = [
@@ -129,9 +136,9 @@ def make_engine_with_data():
                  assists=2, off_reb=1, def_reb=4, tot_reb=5, steals=2, turnovers=1, blocks=0, fouls=2, fouls_drawn=2),
         ]
 
-        for ev in _make_player_events(1, True, BILBAO_PLAYERS, bilbao_stats_1, 85, 75):
+        for ev in _make_player_events(1, is_home=True, is_bilbao=True, players=BILBAO_PLAYERS, stats_list=bilbao_stats_1, score_home=85, score_away=75):
             s.add(ev)
-        for ev in _make_player_events(1, False, RIVAL_PLAYERS, rival_stats_1, 85, 75):
+        for ev in _make_player_events(1, is_home=False, is_bilbao=False, players=RIVAL_PLAYERS, stats_list=rival_stats_1, score_home=85, score_away=75):
             s.add(ev)
 
         # ── Partido 2: Bilbao away, pierde 70-80 ──────────────────────────────
@@ -140,7 +147,7 @@ def make_engine_with_data():
             home_team="Rival2", away_team="SurneBilbao",
             bilbao_role="away",
             score_home_final=80, score_away_final=70,
-            source_file="test2.csv",
+            source_file="20251026_2_Rival2_vs_SurneBilbaoBasket_plays.csv",
         ))
 
         bilbao_stats_2 = [
@@ -168,9 +175,11 @@ def make_engine_with_data():
                  assists=2, off_reb=1, def_reb=3, tot_reb=4, steals=1, turnovers=2, blocks=0, fouls=2, fouls_drawn=1),
         ]
 
-        for ev in _make_player_events(2, False, BILBAO_PLAYERS, bilbao_stats_2, 80, 70):
+        # Bilbao es visitante (is_home=False) pero sigue siendo Bilbao (is_bilbao=True)
+        for ev in _make_player_events(2, is_home=False, is_bilbao=True, players=BILBAO_PLAYERS, stats_list=bilbao_stats_2, score_home=80, score_away=70):
             s.add(ev)
-        for ev in _make_player_events(2, False, RIVAL_PLAYERS, rival_stats_2, 80, 70):
+        # Rival es local (is_home=True) y no es Bilbao (is_bilbao=False)
+        for ev in _make_player_events(2, is_home=True, is_bilbao=False, players=RIVAL_PLAYERS, stats_list=rival_stats_2, score_home=80, score_away=70):
             s.add(ev)
 
         s.commit()
