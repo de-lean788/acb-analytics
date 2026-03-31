@@ -217,7 +217,7 @@
       "note": "J20 — jugado antes que J19 Gran Canaria (J19 aplazado). VERIFICAR en acb.com."
     },
     {
-      "jornada": null,
+      "jornada": 28,
       "match_id": 104708,
       "date": "20260207",
       "home_team": "CasademontZaragoza",
@@ -225,7 +225,7 @@
       "result_home": 82,
       "result_away": 84,
       "in_db": true,
-      "note": "JORNADA PENDIENTE DE VERIFICAR en acb.com. match_id no secuencial (104708 >> 104658) sugiere partido aplazado jugado anticipadamente el 07/02. Candidatos: J21 aplazado u otra jornada posterior."
+      "note": "J28 adelantado — jugado el 07/02 anticipadamente. Confirmado."
     },
     {
       "jornada": 21,
