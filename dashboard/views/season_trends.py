@@ -24,10 +24,15 @@ def render(data: dict):
         st.warning("Sin datos suficientes.")
         return
 
-    # Labels para el eje X
+    # Labels para el eje X — usa jornada real si está disponible, si no la fecha
     rivals_short = ff["rival_name"].apply(_short)
-    ff["label"] = [f"J{i+1} {r}\n({'W' if res=='W' else 'L'})"
-                   for i, (r, res) in enumerate(zip(rivals_short, ff["result"]))]
+    ff["label"] = [
+        _match_label(rn, date, rival, res)
+        for rn, date, rival, res in zip(
+            ff.get("round_number", [None] * len(ff)),
+            ff["date"], rivals_short, ff["result"],
+        )
+    ]
     nr["label"] = ff["label"]
 
     wins  = ss["wins"]
@@ -196,20 +201,53 @@ def render(data: dict):
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
+def _match_label(round_number, date_str: str, rival_short: str, result: str) -> str:
+    """Genera la etiqueta del eje X. Usa Jn si hay jornada, dd/mm si no."""
+    import pandas as pd
+    if round_number is not None and not (isinstance(round_number, float) and pd.isna(round_number)):
+        prefix = f"J{int(round_number)}"
+    else:
+        try:
+            prefix = pd.to_datetime(str(date_str), format="%Y%m%d").strftime("%-d/%m")
+        except Exception:
+            prefix = str(date_str)
+    outcome = "W" if result == "W" else "L"
+    return f"{prefix} {rival_short}\n({outcome})"
+
+
 def _short(name: str) -> str:
+    """Devuelve la abreviatura de 3 letras del equipo rival."""
     abbrs = {
-        "JoventutBadalona": "JOV", "MoraBancAndorra": "AND",
-        "BAXIManresa": "MAN", "CasademontZaragoza": "ZAR",
-        "RealMadrid": "RMA", "KosnerBaskonia": "BAS",
-        "DreamlandGranCanaria": "GCA", "HioposLleida": "LLE",
-        "RioBreogan": "BRE", "Bara": "BAR", "ValenciaBasket": "VAL",
-        "BsquetGirona": "GIR", "UCAMMurcia": "MUR",
-        "LaLagunaTenerife": "TEN", "CoviranGranada": "GRA",
-        "RecoletasSalud": "BUR", "RecoletasSaludSanPabloBurgos": "BUR",
+        # Todos los equipos ACB 2025-26
+        "joventut":      "JOV",
+        "andorra":       "AND",
+        "manresa":       "MAN",
+        "zaragoza":      "ZAR",
+        "realmadrid":    "RMA",
+        "baskonia":      "BAS",
+        "grancanaria":   "GCA",
+        "lleida":        "LLE",
+        "breogan":       "BRE",
+        "bara":          "BAR",
+        "barca":         "BAR",
+        "valencia":      "VAL",
+        "girona":        "GIR",
+        "ucam":          "MUR",
+        "murcia":        "MUR",
+        "tenerife":      "TEN",
+        "granada":       "GRA",
+        "burgos":        "BUR",
+        "recoletas":     "BUR",
+        "unicaja":       "UNI",
     }
-    for k, v in abbrs.items():
-        if k.lower() in name.lower():
-            return v
+    key = name.lower().replace(" ", "").replace("á", "a").replace("à", "a")
+    for fragment, abbr in abbrs.items():
+        if fragment in key:
+            return abbr
+    # Fallback: primera sílaba significativa (primera letra de cada palabra)
+    words = [w for w in name.replace("_", " ").split() if len(w) > 2]
+    if words:
+        return "".join(w[0] for w in words[:3]).upper()
     return name[:3].upper()
 
 
