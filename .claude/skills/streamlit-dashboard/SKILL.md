@@ -90,3 +90,8 @@ if not IS_CLOUD:
 - `dashboard/app.py` — entry point
 - `dashboard/views/` — vistas actuales
 - `.claude/rules/streamlit.md` — reglas detalladas
+
+## Token efficiency
+- Para depurar una vista: trabajar con datos mockeados o `df.head(20)`, no datos reales completos
+- No leer `app.py` salvo que el problema sea de routing — las vistas son independientes
+- Al modificar una vista: leer solo ese fichero (`views/mi_vista.py`), no todo `dashboard/`
