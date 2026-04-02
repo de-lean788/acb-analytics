@@ -78,3 +78,8 @@ save_csv(df, output_dir, filename)            # store
 
 - `acb_scraper.py` — implementación actual
 - `.claude/rules/scraping.md` — reglas detalladas
+
+## Token efficiency
+- Al depurar un scraper: testear con un único `match_id`, no un rango de partidos
+- El output de `fetch_match` no necesita imprimirse completo — loggear solo `match_id` y número de plays
+- Si hay error de parsing: mostrar `raw_data[:3]` (primeras entradas), no el JSON completo

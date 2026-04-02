@@ -73,3 +73,8 @@ data:     datos nuevos (ej: "data: añadir partidos J8-J12")
 test:     tests (ej: "test: validación jugadores Bilbao")
 refactor: sin cambio de comportamiento
 ```
+
+## Token efficiency
+- Antes de hacer deploy: ejecutar `pytest tests/ -q` (no `-v`) — output mínimo suficiente para confirmar
+- No leer `migrate_to_supabase.py` completo salvo que el problema sea de migración
+- Para verificar deploy: comprobar solo la URL final, no releer ficheros de configuración

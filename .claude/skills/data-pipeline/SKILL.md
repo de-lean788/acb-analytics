@@ -80,3 +80,9 @@ python -c "from db.models import engine; ..."  # conteo de filas
 - `pipeline/ingest.py` — implementación actual
 - `db/models.py` — esquema de tablas
 - `.claude/rules/data-quality.md` — reglas detalladas
+
+## Token efficiency
+- Para inspeccionar CSVs: `pd.read_csv(f, nrows=100)` en exploración, nunca el fichero completo
+- El log de ingesta debe mostrar conteo de filas y errores, no el DataFrame
+- Si falla una validación: mostrar solo los registros problemáticos (`df[mask].head(10)`), no todo el df
+- Verificación post-ingesta: un `SELECT COUNT(*)` es suficiente para confirmar, no un `SELECT *`

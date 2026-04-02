@@ -89,3 +89,8 @@ for _, row in df.iterrows():
 - `analytics/metrics.py` — implementación actual
 - `analytics/lineups.py` — reconstrucción de quintetos
 - `.claude/rules/data-quality.md` — validaciones obligatorias
+
+## Token efficiency
+- Para explorar datos: `df.head(100)`, nunca cargar el DataFrame completo
+- Al calcular métricas: devolver solo el resultado final, no los pasos intermedios
+- Si hay que depurar una fórmula: trabajar con un partido concreto (`match_id=X`), no toda la temporada
